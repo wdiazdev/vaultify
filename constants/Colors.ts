@@ -18,5 +18,5 @@ export default {
   },
   background: '#3B3486',
   primary: '#800080',
-  secondary: '#A2EACB'
+  secondary: '#0995e0'
 }

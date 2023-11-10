@@ -1,5 +1,6 @@
 import { Stack } from 'expo-router'
 import CustomHeader from '@/Components/CustomHeader'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
 export const unstable_settings = {
   // Ensure that reloading on `/modal` keeps a back button present.
@@ -7,15 +8,18 @@ export const unstable_settings = {
 }
 
 export default function RootLayoutNav() {
+  const queryClient = new QueryClient()
   return (
-    <Stack>
-      <Stack.Screen
-        name="index"
-        options={{
-          header: () => <CustomHeader />
-        }}
-      />
-    </Stack>
+    <QueryClientProvider client={queryClient}>
+      <Stack>
+        <Stack.Screen
+          name="index"
+          options={{
+            header: () => <CustomHeader />
+          }}
+        />
+      </Stack>
+    </QueryClientProvider>
   )
 }
 
