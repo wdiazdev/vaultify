@@ -2,8 +2,8 @@ const baseURL = 'https://api.coingecko.com/api/v3'
 
 export const singleCoin = async (coin: string) => {
   const response = await fetch(
-    `${baseURL}/coins/markets?vs_currency=usd&ids=${coin}&order=market_cap_desc&per_page=100&page=1&sparkline=false`
+    `${baseURL}/coins/markets?vs_currency=usd&ids=${coin}`
   )
   const result = await response.json()
-  return result
+  return result[0]
 }
