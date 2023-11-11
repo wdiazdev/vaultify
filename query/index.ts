@@ -7,3 +7,9 @@ export const singleCoin = async (coin: string) => {
   const result = await response.json()
   return result[0]
 }
+
+export const marketCap = async () => {
+  const response = await fetch(`${baseURL}/global/`)
+  const result = await response.json()
+  return result
+}

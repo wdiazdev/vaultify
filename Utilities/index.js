@@ -10,3 +10,11 @@ export function formatCurrency(number) {
 export function numberWithCommas(num) {
   return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
 }
+
+export function formatNumber(number) {
+  if (typeof number !== 'number') {
+    return null
+  }
+
+  return (number / 1e12).toFixed(2)
+}

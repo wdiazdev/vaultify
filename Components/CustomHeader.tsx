@@ -3,8 +3,22 @@ import React from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Colors from '@/constants/Colors'
 import { Ionicons } from '@expo/vector-icons'
+import { useQuery } from '@tanstack/react-query'
+import { marketCap } from '@/query'
+import { formatNumber, numberWithCommas } from '@/Utilities'
 
 const CustomHeader = () => {
+  const {
+    data: marketCapData,
+    isLoading,
+    isError
+  } = useQuery({
+    queryKey: ['Global Market Data'],
+    queryFn: () => marketCap(),
+    staleTime: 60 * 60 * 1000,
+    refetchOnWindowFocus: false
+  })
+
   const {
     safeArea,
     container,
@@ -18,15 +32,15 @@ const CustomHeader = () => {
       <View style={container}>
         <View style={marketCapWrapper}>
           <Text style={marketCapText}>Market Cap</Text>
-          <Text style={{ ...marketCapText, color: Colors.secondary }}>
-            1.06 T
+          <Text style={{ ...marketCapText, color: Colors.primary }}>
+            {formatNumber(marketCapData?.data.total_market_cap.usd)}T
           </Text>
         </View>
         <View style={headerRightContainer}>
           <Ionicons
             name={'notifications-outline'}
             size={26}
-            color={Colors.secondary}
+            color={Colors.primary}
             style={{ marginTop: 6 }}
           />
           <TouchableOpacity>
@@ -74,7 +88,7 @@ const styles = StyleSheet.create({
     height: 40,
     borderRadius: 50,
     borderWidth: 1.5,
-    borderColor: Colors.secondary
+    borderColor: Colors.primary
   }
 })
 
