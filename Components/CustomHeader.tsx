@@ -1,4 +1,11 @@
-import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native'
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  Image,
+  ActivityIndicator
+} from 'react-native'
 import React from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Colors from '@/constants/Colors'
@@ -11,7 +18,7 @@ const CustomHeader = () => {
   const {
     data: marketCapData,
     isLoading,
-    isError
+    isSuccess
   } = useQuery({
     queryKey: ['Global Market Data'],
     queryFn: () => marketCap(),
@@ -30,12 +37,17 @@ const CustomHeader = () => {
   return (
     <SafeAreaView style={safeArea}>
       <View style={container}>
-        <View style={marketCapWrapper}>
-          <Text style={marketCapText}>Market Cap</Text>
-          <Text style={{ ...marketCapText, color: Colors.primary }}>
-            {formatNumber(marketCapData?.data.total_market_cap.usd)}T
-          </Text>
-        </View>
+        {isLoading && <ActivityIndicator size={'small'} />}
+
+        {!isLoading && isSuccess && (
+          <View style={marketCapWrapper}>
+            <Text style={marketCapText}>Market Cap</Text>
+            <Text style={{ ...marketCapText, color: Colors.primary }}>
+              {formatNumber(marketCapData?.data.total_market_cap.usd)}T
+            </Text>
+          </View>
+        )}
+
         <View style={headerRightContainer}>
           <Ionicons
             name={'notifications-outline'}
@@ -76,6 +88,7 @@ const styles = StyleSheet.create({
     gap: 6
   },
   marketCapText: {
+    fontFamily: 'm-regular',
     color: '#fff',
     fontWeight: 'bold'
   },

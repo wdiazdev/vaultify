@@ -4,7 +4,7 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import Colors from '@/constants/Colors'
 import MainCard from '@/Components/MainCard'
 
-const index = () => {
+const Main = () => {
   const { container } = styles
 
   return (
@@ -22,4 +22,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default index
+export default Main

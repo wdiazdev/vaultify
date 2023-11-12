@@ -76,6 +76,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row'
   },
   headerText: {
+    fontFamily: 'm-regular',
     fontSize: 20,
     color: '#fff',
     fontWeight: 'bold'
