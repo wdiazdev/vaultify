@@ -2,14 +2,16 @@ import { StyleSheet } from 'react-native'
 import React from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Colors from '@/constants/Colors'
-import MainCard from '@/Components/MainCard'
+import MarketCard from '@/Components/Market/MarketCard'
+import Markets from '@/Components/Market/Markets'
 
 const Main = () => {
   const { container } = styles
 
   return (
     <SafeAreaView style={container}>
-      <MainCard />
+      <MarketCard />
+      <Markets />
     </SafeAreaView>
   )
 }

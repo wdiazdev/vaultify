@@ -7,7 +7,7 @@ import { singleCoin } from '@/query'
 
 const MainCard = () => {
   const { data, isLoading, isSuccess } = useQuery({
-    queryKey: ['Single Coins'],
+    queryKey: ['Single Coin'],
     queryFn: () => singleCoin('bitcoin'),
     staleTime: 60 * 60 * 1000,
     refetchOnWindowFocus: false
@@ -29,17 +29,22 @@ const MainCard = () => {
           : cardContainer
       }
     >
-      {isLoading && <ActivityIndicator size={'large'} />}
+      {isLoading && <ActivityIndicator size={'large'} color={Colors.primary} />}
 
       {isSuccess && !isLoading && (
         <>
           <View style={{ alignItems: 'center', justifyContent: 'center' }}>
             <Image source={{ uri: data?.image }} style={wrapperImg} />
             <View style={coinInfoHeader}>
-              <Text style={[headerText, { flex: 1 }]}>
+              <Text style={[headerText, { flex: 1, fontFamily: 'm-bold' }]}>
                 {data?.symbol.toUpperCase()}
               </Text>
-              <Text style={[headerText, { color: Colors.primary }]}>
+              <Text
+                style={[
+                  headerText,
+                  { color: Colors.primary, fontFamily: 'm-bold' }
+                ]}
+              >
                 #{data?.market_cap_rank}
               </Text>
             </View>
@@ -53,9 +58,9 @@ const MainCard = () => {
         </>
       )}
       {!isLoading && !isSuccess && (
-        <>
+        <View style={{ alignItems: 'center' }}>
           <Text style={[headerText, { fontSize: 14 }]}>No data found.</Text>
-        </>
+        </View>
       )}
     </View>
   )
@@ -76,14 +81,13 @@ const styles = StyleSheet.create({
     flexDirection: 'row'
   },
   headerText: {
-    fontFamily: 'm-regular',
+    fontFamily: 'm-medium',
     fontSize: 20,
-    color: '#fff',
-    fontWeight: 'bold'
+    color: '#fff'
   },
   priceContainer: {
     position: 'absolute',
-    top: 18,
+    top: 12,
     justifyContent: 'center',
     alignItems: 'center'
   },

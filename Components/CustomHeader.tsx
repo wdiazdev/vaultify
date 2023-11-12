@@ -12,7 +12,7 @@ import Colors from '@/constants/Colors'
 import { Ionicons } from '@expo/vector-icons'
 import { useQuery } from '@tanstack/react-query'
 import { marketCap } from '@/query'
-import { formatNumber, numberWithCommas } from '@/Utilities'
+import { formatNumber } from '@/Utilities'
 
 const CustomHeader = () => {
   const {
@@ -37,7 +37,9 @@ const CustomHeader = () => {
   return (
     <SafeAreaView style={safeArea}>
       <View style={container}>
-        {isLoading && <ActivityIndicator size={'small'} />}
+        {isLoading && (
+          <ActivityIndicator size={'small'} color={Colors.primary} />
+        )}
 
         {!isLoading && isSuccess && (
           <View style={marketCapWrapper}>
@@ -46,6 +48,19 @@ const CustomHeader = () => {
               {formatNumber(marketCapData?.data.total_market_cap.usd)}T
             </Text>
           </View>
+        )}
+        {!isLoading && !isSuccess && (
+          <>
+            <Text
+              style={{
+                color: '#fff',
+                fontFamily: 'm-medium',
+                fontSize: 12
+              }}
+            >
+              No data found.
+            </Text>
+          </>
         )}
 
         <View style={headerRightContainer}>
@@ -88,9 +103,8 @@ const styles = StyleSheet.create({
     gap: 6
   },
   marketCapText: {
-    fontFamily: 'm-regular',
-    color: '#fff',
-    fontWeight: 'bold'
+    fontFamily: 'm-medium',
+    color: '#fff'
   },
   headerRightContainer: {
     flexDirection: 'row',
