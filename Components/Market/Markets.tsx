@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
+import { View, Text, StyleSheet } from 'react-native'
 import React, { useState } from 'react'
 import Tabs from './Tabs'
 import CoinsData from './CoinsData'
@@ -9,6 +9,7 @@ const Markets = () => {
   const handleActiveTab = (tab: string) => {
     setActiveTab(tab)
   }
+
   const { header, container } = styles
 
   const tabItems = ['Coins', 'Exchanges', 'Chains']
@@ -25,14 +26,13 @@ const Markets = () => {
     </View>
   )
 }
+
 const styles = StyleSheet.create({
-  container: {
-    marginTop: 20
-  },
+  container: {},
   header: {
     color: '#fff',
     fontFamily: 'm-bold',
-    fontSize: 20,
+    fontSize: 18,
     marginBottom: 10
   }
 })

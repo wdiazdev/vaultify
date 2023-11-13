@@ -174,8 +174,8 @@ const styles = StyleSheet.create({
   },
   itemSeparator: {
     height: 1,
-    backgroundColor: Colors.grey,
-    opacity: 0.6,
+    backgroundColor: Colors.silver,
+    opacity: 0.2,
     marginVertical: 5
   },
   errorContainer: {

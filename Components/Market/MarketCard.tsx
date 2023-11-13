@@ -32,30 +32,28 @@ const MainCard = () => {
       {isLoading && <ActivityIndicator size={'large'} color={Colors.primary} />}
 
       {isSuccess && !isLoading && (
-        <>
-          <View style={{ alignItems: 'center', justifyContent: 'center' }}>
-            <Image source={{ uri: data?.image }} style={wrapperImg} />
-            <View style={coinInfoHeader}>
-              <Text style={[headerText, { flex: 1, fontFamily: 'm-bold' }]}>
-                {data?.symbol.toUpperCase()}
-              </Text>
-              <Text
-                style={[
-                  headerText,
-                  { color: Colors.primary, fontFamily: 'm-bold' }
-                ]}
-              >
-                #{data?.market_cap_rank}
-              </Text>
-            </View>
-            <View style={priceContainer}>
-              <Text style={[headerText, { fontSize: 18 }]}>{data?.name}</Text>
-              <Text style={[headerText, { fontSize: 18 }]}>
-                {formatCurrency(data?.current_price)}
-              </Text>
-            </View>
+        <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+          <Image source={{ uri: data?.image }} style={wrapperImg} />
+          <View style={coinInfoHeader}>
+            <Text style={[headerText, { flex: 1, fontFamily: 'm-bold' }]}>
+              {data?.symbol.toUpperCase()}
+            </Text>
+            <Text
+              style={[
+                headerText,
+                { color: Colors.primary, fontFamily: 'm-bold' }
+              ]}
+            >
+              #{data?.market_cap_rank}
+            </Text>
           </View>
-        </>
+          <View style={priceContainer}>
+            <Text style={[headerText, { fontSize: 18 }]}>{data?.name}</Text>
+            <Text style={[headerText, { fontSize: 18 }]}>
+              {formatCurrency(data?.current_price)}
+            </Text>
+          </View>
+        </View>
       )}
       {!isLoading && !isSuccess && (
         <View style={{ alignItems: 'center' }}>
@@ -68,21 +66,20 @@ const MainCard = () => {
 
 const styles = StyleSheet.create({
   cardContainer: {
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
     marginTop: 24,
     height: 100,
     borderRadius: 6,
     overflow: 'hidden',
     padding: 8,
-    borderWidth: 1,
-    borderColor: '#fff'
+    borderWidth: 2,
+    borderColor: Colors.secondary
   },
   coinInfoHeader: {
     flexDirection: 'row'
   },
   headerText: {
     fontFamily: 'm-medium',
-    fontSize: 20,
+    fontSize: 18,
     color: '#fff'
   },
   priceContainer: {

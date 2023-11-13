@@ -8,7 +8,7 @@ const Portfolio = () => {
 
   return (
     <SafeAreaView style={container}>
-      <Text>Portfolio</Text>
+      <Text style={{ color: '#fff' }}>Portfolio</Text>
     </SafeAreaView>
   )
 }

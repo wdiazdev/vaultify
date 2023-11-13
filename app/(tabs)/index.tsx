@@ -4,6 +4,7 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import Colors from '@/constants/Colors'
 import MarketCard from '@/Components/Market/MarketCard'
 import Markets from '@/Components/Market/Markets'
+import Trending from '@/Components/Market/Trending'
 
 const Main = () => {
   const { container } = styles
@@ -11,6 +12,7 @@ const Main = () => {
   return (
     <SafeAreaView style={container}>
       <MarketCard />
+      <Trending />
       <Markets />
     </SafeAreaView>
   )
