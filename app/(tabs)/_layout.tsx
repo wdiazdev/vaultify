@@ -9,7 +9,7 @@ const _layout = () => {
       screenOptions={{
         headerShown: false,
         tabBarStyle: {
-          backgroundColor: Colors.gray,
+          backgroundColor: Colors.grey,
           height: 55
         },
         tabBarActiveTintColor: Colors.primary,

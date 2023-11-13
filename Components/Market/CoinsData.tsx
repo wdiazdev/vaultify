@@ -21,7 +21,7 @@ type Props = {
     name: string
     image: string
     current_price: number
-    price_change_24h: number
+    price_change_percentage_24h: number
     market_cap_rank: number
   }
 }
@@ -39,33 +39,43 @@ const CoinsData = () => {
     <TouchableOpacity>
       <View style={rowContainer}>
         <Text style={rowText}>{item.market_cap_rank}</Text>
-        <View
-          style={{
-            flex: 1,
-            flexDirection: 'row',
-            alignItems: 'center',
-            gap: 6,
-            marginLeft: 20
-          }}
-        >
-          <Image source={{ uri: item.image }} style={rowImg} />
+
+        <View style={imageContainer}>
+          <Image source={{ uri: item.image }} style={coinImg} />
           <View>
-            <Text style={rowText}>{item.name}</Text>
-            <Text style={[rowText, { fontSize: 10, color: Colors.primary }]}>
+            <Text style={[rowText, { marginBottom: -5 }]}>{item.name}</Text>
+            <Text
+              style={[
+                rowText,
+                {
+                  color: Colors.primary,
+                  fontFamily: 'm-medium'
+                }
+              ]}
+            >
               {item.symbol.toUpperCase()}
             </Text>
           </View>
         </View>
-        <Text style={rowText}>{formatCurrency(item.current_price)}</Text>
-        <Text
-          style={
-            item.price_change_24h > 0
-              ? [rowText, { color: '#7CFC00' }]
-              : [rowText, { color: '#DC0000' }]
-          }
+        <View
+          style={{
+            flex: 1,
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            marginLeft: 40
+          }}
         >
-          {item.price_change_24h.toFixed(2)}%
-        </Text>
+          <Text style={rowText}>{formatCurrency(item.current_price)}</Text>
+          <Text
+            style={
+              item.price_change_percentage_24h > 0
+                ? { color: '#7CFC00' }
+                : { color: '#DC0000' }
+            }
+          >
+            {item.price_change_percentage_24h.toFixed(2)}%
+          </Text>
+        </View>
       </View>
     </TouchableOpacity>
   )
@@ -75,8 +85,12 @@ const CoinsData = () => {
     headerContainer,
     headerText,
     rowContainer,
-    rowImg,
-    rowText
+    coinImg,
+    rowText,
+    imageContainer,
+    itemSeparator,
+    errorContainer,
+    errorText
   } = styles
 
   return (
@@ -99,26 +113,19 @@ const CoinsData = () => {
           data={data}
           keyExtractor={(item) => item.id}
           renderItem={renderItem}
+          ItemSeparatorComponent={() => <View style={itemSeparator} />}
+          contentContainerStyle={{ paddingBottom: data ? 340 : 0 }}
         />
       )}
       {!isLoading && !isSuccess && (
-        <View style={{ flexDirection: 'row', alignItems: 'center', gap: 2 }}>
+        <View style={errorContainer}>
           <Ionicons
             name={'sad-outline'}
             size={18}
             color={'#fff'}
             style={{ marginBottom: 4 }}
           />
-          <Text
-            style={{
-              color: '#fff',
-              fontSize: 14,
-              fontFamily: 'm-medium',
-              marginVertical: 6
-            }}
-          >
-            No data found.
-          </Text>
+          <Text style={errorText}>No data found.</Text>
         </View>
       )}
     </View>
@@ -134,7 +141,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     paddingHorizontal: 10,
     paddingVertical: 4,
-    backgroundColor: Colors.gray
+    backgroundColor: Colors.grey
   },
   headerText: {
     fontFamily: 'm-medium',
@@ -142,21 +149,45 @@ const styles = StyleSheet.create({
     color: Colors.primary
   },
   rowContainer: {
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingHorizontal: 10,
     paddingVertical: 4
   },
-  rowImg: {
+  coinImg: {
     width: 25,
-    height: 25
+    height: 25,
+    marginBottom: 2
   },
   rowText: {
     fontSize: 12,
     color: '#fff',
     fontFamily: 'm-regular'
+  },
+  imageContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginLeft: 20,
+    gap: 6
+  },
+  itemSeparator: {
+    height: 1,
+    backgroundColor: Colors.grey,
+    opacity: 0.6,
+    marginVertical: 5
+  },
+  errorContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 2
+  },
+  errorText: {
+    color: '#fff',
+    fontSize: 14,
+    fontFamily: 'm-medium',
+    marginVertical: 6
   }
 })
 
