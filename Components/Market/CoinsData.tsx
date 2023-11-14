@@ -13,6 +13,7 @@ import { coinsData } from '@/query'
 import { formatCurrency } from '@/Utilities'
 import Colors from '@/constants/Colors'
 import { Feather } from '@expo/vector-icons'
+import { Link } from 'expo-router'
 
 type Props = {
   item: {
@@ -36,48 +37,53 @@ const CoinsData = () => {
   })
 
   const renderItem = ({ item }: Props) => (
-    <TouchableOpacity>
-      <View style={rowContainer}>
-        <Text style={rowText}>{item.market_cap_rank}</Text>
+    <Link
+      href={{ pathname: '/(modal)/coinDetails', params: { id: item.id } }}
+      asChild
+    >
+      <TouchableOpacity>
+        <View style={rowContainer}>
+          <Text style={rowText}>{item.market_cap_rank}</Text>
 
-        <View style={imageContainer}>
-          <Image source={{ uri: item.image }} style={coinImg} />
-          <View>
-            <Text style={[rowText, { marginBottom: -5 }]}>{item.name}</Text>
+          <View style={imageContainer}>
+            <Image source={{ uri: item.image }} style={coinImg} />
+            <View>
+              <Text style={[rowText, { marginBottom: -5 }]}>{item.name}</Text>
+              <Text
+                style={[
+                  rowText,
+                  {
+                    color: Colors.primary,
+                    fontFamily: 'm-medium'
+                  }
+                ]}
+              >
+                {item.symbol.toUpperCase()}
+              </Text>
+            </View>
+          </View>
+          <View
+            style={{
+              flex: 1,
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              marginLeft: 40
+            }}
+          >
+            <Text style={rowText}>{formatCurrency(item.current_price)}</Text>
             <Text
-              style={[
-                rowText,
-                {
-                  color: Colors.primary,
-                  fontFamily: 'm-medium'
-                }
-              ]}
+              style={
+                item.price_change_percentage_24h > 0
+                  ? { color: '#7CFC00' }
+                  : { color: '#DC0000' }
+              }
             >
-              {item.symbol.toUpperCase()}
+              {item.price_change_percentage_24h.toFixed(2)}%
             </Text>
           </View>
         </View>
-        <View
-          style={{
-            flex: 1,
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            marginLeft: 40
-          }}
-        >
-          <Text style={rowText}>{formatCurrency(item.current_price)}</Text>
-          <Text
-            style={
-              item.price_change_percentage_24h > 0
-                ? { color: '#7CFC00' }
-                : { color: '#DC0000' }
-            }
-          >
-            {item.price_change_percentage_24h.toFixed(2)}%
-          </Text>
-        </View>
-      </View>
-    </TouchableOpacity>
+      </TouchableOpacity>
+    </Link>
   )
 
   const {
@@ -128,7 +134,7 @@ const CoinsData = () => {
           keyExtractor={(item) => item.id}
           renderItem={renderItem}
           ItemSeparatorComponent={() => <View style={itemSeparator} />}
-          contentContainerStyle={{ paddingBottom: data ? 340 : 0 }}
+          // contentContainerStyle={{ paddingBottom: 0 }}
           scrollEnabled={false}
         />
       )}

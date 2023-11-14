@@ -27,3 +27,9 @@ export const trendingCoins = async () => {
   const result = await response.json()
   return result
 }
+
+export const fetchCoinData = async (id: string | string[]) => {
+  const response = await fetch(`${baseURL}/coins/${id}`)
+  const result = await response.json()
+  return result
+}

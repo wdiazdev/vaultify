@@ -11,6 +11,7 @@ import React from 'react'
 import { trendingCoins } from '@/query'
 import { useQuery } from '@tanstack/react-query'
 import Colors from '@/constants/Colors'
+import { Link } from 'expo-router'
 
 type TrendingCoins = {
   id: string
@@ -59,41 +60,49 @@ const Trending = () => {
           {trendingCoinsData?.map((coin: TrendingCoins, index: any) => {
             const lastIndex = index === trendingCoinsData.length - 1
             return (
-              <TouchableOpacity
-                //   onPress={}
-                key={coin.id}
+              <Link
+                href={{
+                  pathname: '/(modal)/coinDetails',
+                  params: { id: coin.id }
+                }}
+                asChild
               >
-                <View
-                  style={
-                    lastIndex
-                      ? [cardContainer, { marginEnd: 0 }]
-                      : cardContainer
-                  }
+                <TouchableOpacity
+                  //   onPress={}
+                  key={coin.id}
                 >
-                  <Image
-                    source={require('../../assets/images/cardBg.jpg')}
-                    style={cardBg}
-                  />
-                  <Text
-                    style={[
-                      cardText,
-                      {
-                        color: Colors.primary,
-                        fontFamily: 'm-bold',
-                        fontSize: 10,
-                        position: 'absolute',
-                        top: 2,
-                        right: 2
-                      }
-                    ]}
+                  <View
+                    style={
+                      lastIndex
+                        ? [cardContainer, { marginEnd: 0 }]
+                        : cardContainer
+                    }
                   >
-                    #{coin.market_cap_rank}
-                  </Text>
+                    <Image
+                      source={require('../../assets/images/cardBg.jpg')}
+                      style={cardBg}
+                    />
+                    <Text
+                      style={[
+                        cardText,
+                        {
+                          color: Colors.primary,
+                          fontFamily: 'm-bold',
+                          fontSize: 10,
+                          position: 'absolute',
+                          top: 2,
+                          right: 2
+                        }
+                      ]}
+                    >
+                      #{coin.market_cap_rank}
+                    </Text>
 
-                  <Image source={{ uri: coin.small }} style={cardImg} />
-                  <Text style={cardText}>{coin.symbol.toUpperCase()}</Text>
-                </View>
-              </TouchableOpacity>
+                    <Image source={{ uri: coin.small }} style={cardImg} />
+                    <Text style={cardText}>{coin.symbol.toUpperCase()}</Text>
+                  </View>
+                </TouchableOpacity>
+              </Link>
             )
           })}
         </ScrollView>

@@ -66,7 +66,7 @@ const CustomHeader = () => {
         <View style={headerRightContainer}>
           <TouchableOpacity>
             <Ionicons
-              name={'notifications-outline'}
+              name={'search'}
               size={26}
               color={Colors.primary}
               style={{ marginTop: 6 }}
