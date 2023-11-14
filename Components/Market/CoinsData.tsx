@@ -12,7 +12,7 @@ import { useQuery } from '@tanstack/react-query'
 import { coinsData } from '@/query'
 import { formatCurrency } from '@/Utilities'
 import Colors from '@/constants/Colors'
-import { Ionicons } from '@expo/vector-icons'
+import { Feather } from '@expo/vector-icons'
 
 type Props = {
   item: {
@@ -96,7 +96,21 @@ const CoinsData = () => {
   return (
     <View style={container}>
       <View style={headerContainer}>
-        <Text style={headerText}>#</Text>
+        <TouchableOpacity
+          // onPress={}
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center'
+          }}
+        >
+          <Text style={headerText}>#</Text>
+          <Feather
+            name={'chevron-down'}
+            size={12}
+            color={Colors.primary}
+            style={{ marginBottom: 2 }}
+          />
+        </TouchableOpacity>
         <Text style={headerText}>Name</Text>
         <Text style={headerText}>Price</Text>
         <Text style={headerText}>24h%</Text>
@@ -115,14 +129,15 @@ const CoinsData = () => {
           renderItem={renderItem}
           ItemSeparatorComponent={() => <View style={itemSeparator} />}
           contentContainerStyle={{ paddingBottom: data ? 340 : 0 }}
+          scrollEnabled={false}
         />
       )}
       {!isLoading && !isSuccess && (
         <View style={errorContainer}>
-          <Ionicons
-            name={'sad-outline'}
-            size={18}
-            color={'#fff'}
+          <Feather
+            name={'frown'}
+            size={16}
+            color={'white'}
             style={{ marginBottom: 4 }}
           />
           <Text style={errorText}>No data found.</Text>
@@ -169,7 +184,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
-    marginLeft: 20,
+    marginLeft: 25,
     gap: 6
   },
   itemSeparator: {

@@ -28,12 +28,11 @@ const Markets = () => {
 }
 
 const styles = StyleSheet.create({
-  container: {},
+  container: { marginTop: 10 },
   header: {
     color: '#fff',
     fontFamily: 'm-bold',
-    fontSize: 18,
-    marginBottom: 10
+    fontSize: 18
   }
 })
 

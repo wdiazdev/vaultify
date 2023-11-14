@@ -53,9 +53,8 @@ const styles = StyleSheet.create({
   tabContainer: {
     alignItems: 'center',
     opacity: 0.4,
-    paddingVertical: 6,
-    paddingHorizontal: 8,
-    borderRadius: 8
+    paddingVertical: 4,
+    paddingHorizontal: 8
   },
   tabText: {
     color: '#fff',
@@ -65,7 +64,8 @@ const styles = StyleSheet.create({
     width: 70,
     height: 2,
     backgroundColor: '#fff',
-    borderRadius: 8
+    borderRadius: 8,
+    marginBottom: -3
   }
 })
 

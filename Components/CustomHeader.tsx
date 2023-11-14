@@ -64,12 +64,14 @@ const CustomHeader = () => {
         )}
 
         <View style={headerRightContainer}>
-          <Ionicons
-            name={'notifications-outline'}
-            size={26}
-            color={Colors.primary}
-            style={{ marginTop: 6 }}
-          />
+          <TouchableOpacity>
+            <Ionicons
+              name={'notifications-outline'}
+              size={26}
+              color={Colors.primary}
+              style={{ marginTop: 6 }}
+            />
+          </TouchableOpacity>
           <TouchableOpacity>
             <Image
               source={require('@/assets/images/avatar.jpg')}
@@ -95,7 +97,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderRadius: 6,
     padding: 16,
-    height: 50
+    height: 50,
+    backgroundColor: Colors.background
   },
   marketCapWrapper: {
     flexDirection: 'row',

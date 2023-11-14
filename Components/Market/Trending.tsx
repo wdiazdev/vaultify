@@ -4,7 +4,8 @@ import {
   ScrollView,
   StyleSheet,
   ActivityIndicator,
-  Image
+  Image,
+  TouchableOpacity
 } from 'react-native'
 import React from 'react'
 import { trendingCoins } from '@/query'
@@ -31,7 +32,15 @@ const Trending = () => {
 
   const trendingCoinsData = data?.coins.map((i: any) => i.item)
 
-  const { header, container, cardContainer, cardBg, cardText, cardImg } = styles
+  const {
+    header,
+    container,
+    cardContainer,
+    cardBg,
+    cardText,
+    cardImg,
+    errorText
+  } = styles
 
   return (
     <View style={container}>
@@ -43,28 +52,55 @@ const Trending = () => {
         <ScrollView
           horizontal
           showsHorizontalScrollIndicator={false}
-          //   contentContainerStyle={{
-          //     padding: 6
-          //   }}
+          contentContainerStyle={{
+            padding: 6
+          }}
         >
-          {trendingCoinsData?.map((coin: TrendingCoins) => {
+          {trendingCoinsData?.map((coin: TrendingCoins, index: any) => {
+            const lastIndex = index === trendingCoinsData.length - 1
             return (
-              <View key={coin.id} style={cardContainer}>
-                <Image
-                  source={require('../../assets/images/cardBg.jpg')}
-                  style={cardBg}
-                />
+              <TouchableOpacity
+                //   onPress={}
+                key={coin.id}
+              >
+                <View
+                  style={
+                    lastIndex
+                      ? [cardContainer, { marginEnd: 0 }]
+                      : cardContainer
+                  }
+                >
+                  <Image
+                    source={require('../../assets/images/cardBg.jpg')}
+                    style={cardBg}
+                  />
+                  <Text
+                    style={[
+                      cardText,
+                      {
+                        color: Colors.primary,
+                        fontFamily: 'm-bold',
+                        fontSize: 10,
+                        position: 'absolute',
+                        top: 2,
+                        right: 2
+                      }
+                    ]}
+                  >
+                    #{coin.market_cap_rank}
+                  </Text>
 
-                <Image source={{ uri: coin.small }} style={cardImg} />
-                <Text style={cardText}>{coin.symbol.toUpperCase()}</Text>
-              </View>
+                  <Image source={{ uri: coin.small }} style={cardImg} />
+                  <Text style={cardText}>{coin.symbol.toUpperCase()}</Text>
+                </View>
+              </TouchableOpacity>
             )
           })}
         </ScrollView>
       )}
       {!isLoading && !isSuccess && (
         <View style={{ alignItems: 'center' }}>
-          {/* <Text style={[headerText, { fontSize: 14 }]}>No data found.</Text> */}
+          <Text style={errorText}>No data found.</Text>
         </View>
       )}
     </View>
@@ -78,8 +114,7 @@ const styles = StyleSheet.create({
   header: {
     color: '#fff',
     fontFamily: 'm-bold',
-    fontSize: 18,
-    marginBottom: 10
+    fontSize: 18
   },
   cardContainer: {
     width: 100,
@@ -90,7 +125,7 @@ const styles = StyleSheet.create({
     borderRadius: 6,
     overflow: 'hidden',
     borderWidth: 1,
-    borderColor: Colors.secondary
+    borderColor: Colors.primary
   },
   cardBg: {
     position: 'absolute',
@@ -108,6 +143,12 @@ const styles = StyleSheet.create({
   cardImg: {
     width: 25,
     height: 25
+  },
+  errorText: {
+    color: '#fff',
+    fontSize: 14,
+    fontFamily: 'm-medium',
+    marginVertical: 6
   }
 })
 

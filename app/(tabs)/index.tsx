@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native'
+import { ScrollView, StyleSheet } from 'react-native'
 import React from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Colors from '@/constants/Colors'
@@ -11,9 +11,11 @@ const Main = () => {
 
   return (
     <SafeAreaView style={container}>
-      <MarketCard />
-      <Trending />
-      <Markets />
+      <ScrollView>
+        <MarketCard />
+        <Trending />
+        <Markets />
+      </ScrollView>
     </SafeAreaView>
   )
 }
