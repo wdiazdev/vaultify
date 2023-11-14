@@ -66,10 +66,10 @@ const Trending = () => {
                   params: { id: coin.id }
                 }}
                 asChild
+                key={coin.id}
               >
                 <TouchableOpacity
-                  //   onPress={}
-                  key={coin.id}
+                //   onPress={}
                 >
                   <View
                     style={

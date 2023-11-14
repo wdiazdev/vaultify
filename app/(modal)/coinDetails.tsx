@@ -1,11 +1,20 @@
-import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native'
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  Image,
+  ActivityIndicator
+} from 'react-native'
 import React, { useLayoutEffect } from 'react'
 import { useLocalSearchParams, useNavigation } from 'expo-router'
 import Colors from '@/constants/Colors'
-import { Ionicons } from '@expo/vector-icons'
+import { Feather, Ionicons } from '@expo/vector-icons'
 import { useQuery } from '@tanstack/react-query'
 import { fetchCoinData } from '@/query'
 import { formatCurrency } from '@/Utilities'
+import PercentageChange from '@/Components/coinDetails/PercentageChange'
+import CoinDetailsHeader from '@/Components/coinDetails/CoinDetailsHeader'
 
 const coinDetails = () => {
   const { id } = useLocalSearchParams()
@@ -36,10 +45,17 @@ const coinDetails = () => {
 
   const topHeaderInfo = () => {
     return (
-      <View style={topHeaderContainer}>
-        <Image source={{ uri: data?.image.small }} style={topHeaderImg} />
-        <Text style={topHeaderText}>{data?.symbol?.toUpperCase()}</Text>
-      </View>
+      <>
+        {isLoading && (
+          <ActivityIndicator size={'small'} color={Colors.primary} />
+        )}
+        {!isLoading && isSuccess && (
+          <View style={topHeaderContainer}>
+            <Image source={{ uri: data?.image.small }} style={topHeaderImg} />
+            <Text style={topHeaderText}>{data?.symbol?.toUpperCase()}</Text>
+          </View>
+        )}
+      </>
     )
   }
 
@@ -69,40 +85,44 @@ const coinDetails = () => {
     topHeaderText,
     topHeaderImg,
     coinDetailsContainer,
-    coinText
+    errorContainer,
+    errorText
   } = styles
 
   return (
-    <View style={container}>
-      <View style={coinDetailsContainer}>
-        <View style={{ flexDirection: 'row', alignItems: 'center', gap: 4 }}>
-          <Text style={coinText}>{data?.name}</Text>
-          <View
-            style={{
-              paddingVertical: 2,
-              paddingHorizontal: 4,
-              backgroundColor: Colors.grey,
-              borderRadius: 8
-            }}
-          >
-            <Text style={[coinText, { color: Colors.secondary, fontSize: 10 }]}>
-              #{data?.market_cap_rank}
-            </Text>
-          </View>
+    <View
+      style={
+        isLoading
+          ? [container, { justifyContent: 'center', alignItems: 'center' }]
+          : container
+      }
+    >
+      {isLoading && <ActivityIndicator size={'large'} color={Colors.primary} />}
+      {!isLoading && isSuccess && (
+        <View style={coinDetailsContainer}>
+          <CoinDetailsHeader data={data} />
         </View>
-        <Text style={coinText}>
-          {' '}
-          {formatCurrency(data?.market_data?.current_price?.usd)}
-        </Text>
-      </View>
+      )}
+      {!isLoading && !isSuccess && (
+        <View style={errorContainer}>
+          <Feather
+            name={'frown'}
+            size={16}
+            color={'white'}
+            style={{ marginBottom: 4 }}
+          />
+          <Text style={errorText}>No data found.</Text>
+        </View>
+      )}
     </View>
   )
 }
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Colors.background,
-    padding: 8
+    padding: 12
   },
   topHeaderBtn: {
     backgroundColor: Colors.grey,
@@ -126,10 +146,16 @@ const styles = StyleSheet.create({
   coinDetailsContainer: {
     marginTop: 90
   },
-  coinText: {
-    fontFamily: 'm-regular',
-    fontSize: 18,
-    color: '#fff'
+  errorContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 2
+  },
+  errorText: {
+    color: '#fff',
+    fontSize: 14,
+    fontFamily: 'm-medium',
+    marginVertical: 6
   }
 })
 
