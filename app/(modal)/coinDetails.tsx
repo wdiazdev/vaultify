@@ -6,7 +6,7 @@ import {
   Image,
   ActivityIndicator
 } from 'react-native'
-import React, { useLayoutEffect } from 'react'
+import React, { useLayoutEffect, useState } from 'react'
 import { useLocalSearchParams, useNavigation } from 'expo-router'
 import Colors from '@/constants/Colors'
 import { Feather, Ionicons } from '@expo/vector-icons'
@@ -15,9 +15,19 @@ import { fetchCoinData } from '@/query'
 import { formatCurrency } from '@/Utilities'
 import PercentageChange from '@/Components/coinDetails/PercentageChange'
 import CoinDetailsHeader from '@/Components/coinDetails/CoinDetailsHeader'
+import Chart from '@/Components/coinDetails/Chart'
+import Tabs from '@/Components/Tabs'
 
 const coinDetails = () => {
+  const [activeTab, setActiveTab] = useState<string>('Coins')
+
   const { id } = useLocalSearchParams()
+
+  const handleActiveTab = (tab: string) => {
+    setActiveTab(tab)
+  }
+
+  const tabItems = ['Overview', 'News']
 
   const navigation = useNavigation()
 
@@ -92,7 +102,7 @@ const coinDetails = () => {
   return (
     <View
       style={
-        isLoading
+        isLoading || !isSuccess
           ? [container, { justifyContent: 'center', alignItems: 'center' }]
           : container
       }
@@ -100,7 +110,13 @@ const coinDetails = () => {
       {isLoading && <ActivityIndicator size={'large'} color={Colors.primary} />}
       {!isLoading && isSuccess && (
         <View style={coinDetailsContainer}>
+          <Tabs
+            handleActiveTab={handleActiveTab}
+            activeTab={activeTab}
+            tabItems={tabItems}
+          />
           <CoinDetailsHeader data={data} />
+          <Chart />
         </View>
       )}
       {!isLoading && !isSuccess && (

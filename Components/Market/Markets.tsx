@@ -1,7 +1,8 @@
 import { View, Text, StyleSheet } from 'react-native'
 import React, { useState } from 'react'
-import Tabs from './Tabs'
+
 import CoinsData from './CoinsData'
+import Tabs from '../Tabs'
 
 const Markets = () => {
   const [activeTab, setActiveTab] = useState<string>('Coins')
