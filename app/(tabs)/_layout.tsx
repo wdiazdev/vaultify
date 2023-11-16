@@ -13,7 +13,7 @@ const _layout = () => {
           height: 55
         },
         tabBarActiveTintColor: Colors.primary,
-        tabBarInactiveTintColor: 'white',
+        tabBarInactiveTintColor: Colors.silver,
 
         tabBarLabelStyle: {
           fontFamily: 'm-regular',
@@ -29,7 +29,7 @@ const _layout = () => {
             <Feather
               name={'home'}
               size={20}
-              color={focused ? Colors.primary : 'white'}
+              color={focused ? Colors.primary : Colors.silver}
             />
           )
         }}
@@ -42,7 +42,7 @@ const _layout = () => {
             <Feather
               name={'pie-chart'}
               size={20}
-              color={focused ? Colors.primary : 'white'}
+              color={focused ? Colors.primary : Colors.silver}
             />
           )
         }}

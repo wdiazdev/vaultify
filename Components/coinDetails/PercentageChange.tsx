@@ -1,16 +1,48 @@
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
-import React from 'react'
+import React, { useState } from 'react'
 import { Feather } from '@expo/vector-icons'
+import { numberWithCommas } from '@/Utilities'
 
 type Props = {
-  percentage: number
+  data: {
+    market_data: {
+      price_change_percentage_24h: number
+      price_change_24h: number
+    }
+  }
 }
 
-const PercentageChange = ({ percentage }: Props) => {
+const PercentageChange = ({ data }: Props) => {
+  const [change, setChange] = useState<boolean>(true)
+
+  const percentage = parseFloat(
+    data?.market_data?.price_change_percentage_24h.toFixed(2)
+  )
+
+  const priceChange = Math.abs(data?.market_data?.price_change_24h)
+
+  const formatPriceChange = () => {
+    if (change) {
+      return `${percentage}%`
+    } else if (!change && priceChange) {
+      return `$${
+        priceChange > 1
+          ? numberWithCommas(priceChange.toFixed(2))
+          : priceChange.toFixed(6)
+      }`
+    } else {
+      return null
+    }
+  }
+
+  const toggleChange = () => {
+    setChange(!change)
+  }
+
   const { percentageContainer, percentageContainerText } = styles
 
   return (
-    <TouchableOpacity>
+    <TouchableOpacity onPress={toggleChange}>
       <View
         style={
           percentage > 0
@@ -23,7 +55,7 @@ const PercentageChange = ({ percentage }: Props) => {
           size={14}
           color={'white'}
         />
-        <Text style={percentageContainerText}>{percentage}%</Text>
+        <Text style={percentageContainerText}>{formatPriceChange()}</Text>
       </View>
     </TouchableOpacity>
   )

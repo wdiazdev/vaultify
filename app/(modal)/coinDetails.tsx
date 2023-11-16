@@ -111,7 +111,7 @@ const coinDetails = () => {
       {isLoading && <ActivityIndicator size={'large'} color={Colors.primary} />}
 
       {!isLoading && isSuccess && (
-        <View style={coinDetailsContainer}>
+        <ScrollView style={coinDetailsContainer}>
           <Tabs
             handleActiveTab={handleActiveTab}
             activeTab={activeTab}
@@ -119,11 +119,11 @@ const coinDetails = () => {
           />
           <View style={{ marginTop: 10 }}>
             {activeTab === 'Overview' && (
-              <ScrollView>
+              <>
                 <CoinDetailsHeader data={data} />
                 <Chart />
                 <Overview data={data} />
-              </ScrollView>
+              </>
             )}
             {activeTab === 'News' && (
               <>
@@ -131,7 +131,7 @@ const coinDetails = () => {
               </>
             )}
           </View>
-        </View>
+        </ScrollView>
       )}
 
       {!isLoading && !isSuccess && (

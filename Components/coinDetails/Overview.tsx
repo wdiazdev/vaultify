@@ -40,7 +40,9 @@ const Overview = ({ data }: Props) => {
     <>
       <View style={{ flexDirection: 'row', paddingVertical: 2 }}>
         <Text style={[text, { flex: 1 }]}>{label}</Text>
-        <Text style={[text, { color: color }]}>{value}</Text>
+        <Text style={[text, { color: color, fontFamily: 'm-medium' }]}>
+          {value}
+        </Text>
       </View>
       <View style={separator} />
     </>
@@ -100,13 +102,14 @@ const styles = StyleSheet.create({
   Container: {
     backgroundColor: Colors.grey,
     padding: 8,
-    borderRadius: 8
+    borderRadius: 8,
+    gap: 2
   },
-  text: { fontFamily: 'm-medium', fontSize: 12, color: '#fff' },
+  text: { fontFamily: 'm-regular', fontSize: 12, color: '#fff' },
   separator: {
     height: 1,
     backgroundColor: Colors.silver,
-    opacity: 0.2,
+    opacity: 0.1,
     marginVertical: 5
   }
 })

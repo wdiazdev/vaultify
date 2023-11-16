@@ -2,12 +2,13 @@ import { View, Text, StyleSheet } from 'react-native'
 import React from 'react'
 import PercentageChange from './PercentageChange'
 import Colors from '@/constants/Colors'
-import { formatCurrency } from '@/Utilities'
+import { numberWithCommas } from '@/Utilities'
 
 type Props = {
   data: {
     market_data: {
       price_change_percentage_24h: number
+      price_change_24h: number
       current_price: {
         usd: number
       }
@@ -18,11 +19,10 @@ type Props = {
 }
 
 const CoinDetailsHeader = ({ data }: Props) => {
-  const percentageChange = parseFloat(
-    data?.market_data?.price_change_percentage_24h.toFixed(2)
-  )
+  const currentPrice = data?.market_data?.current_price?.usd
 
   const { container, rankContainer, priceAnd24hContainer, coinText } = styles
+
   return (
     <>
       <View style={container}>
@@ -36,9 +36,11 @@ const CoinDetailsHeader = ({ data }: Props) => {
 
       <View style={priceAnd24hContainer}>
         <Text style={coinText}>
-          {formatCurrency(data?.market_data?.current_price?.usd)}
+          {currentPrice > 1
+            ? `$${numberWithCommas(currentPrice.toFixed(2))}`
+            : `$${currentPrice.toFixed(6)}`}
         </Text>
-        <PercentageChange percentage={percentageChange} />
+        <PercentageChange data={data} />
       </View>
     </>
   )
