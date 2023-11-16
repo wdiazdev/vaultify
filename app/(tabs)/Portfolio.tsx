@@ -1,14 +1,15 @@
-import { StyleSheet, Text } from 'react-native'
+import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Colors from '@/constants/Colors'
 
 const Portfolio = () => {
-  const { container } = styles
-
+  const { container, header } = styles
   return (
     <SafeAreaView style={container}>
-      <Text style={{ color: '#fff' }}>Portfolio</Text>
+      <View style={{ marginTop: 24 }}>
+        <Text style={header}>Portfolio</Text>
+      </View>
     </SafeAreaView>
   )
 }
@@ -18,6 +19,11 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: Colors.background,
     padding: 8
+  },
+  header: {
+    color: '#fff',
+    fontFamily: 'm-medium',
+    fontSize: 18
   }
 })
 

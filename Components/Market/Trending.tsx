@@ -122,7 +122,7 @@ const styles = StyleSheet.create({
   },
   header: {
     color: '#fff',
-    fontFamily: 'm-bold',
+    fontFamily: 'm-medium',
     fontSize: 18
   },
   cardContainer: {

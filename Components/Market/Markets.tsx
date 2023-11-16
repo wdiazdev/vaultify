@@ -24,6 +24,8 @@ const Markets = () => {
         activeTab={activeTab}
       />
       {activeTab === 'Coins' && <CoinsData />}
+      {/* {activeTab === 'Exchanges' && <Exchanges />}
+      {activeTab === 'Chains' && <Chains />} */}
     </View>
   )
 }
@@ -32,7 +34,7 @@ const styles = StyleSheet.create({
   container: { marginTop: 10 },
   header: {
     color: '#fff',
-    fontFamily: 'm-bold',
+    fontFamily: 'm-medium',
     fontSize: 18
   }
 })

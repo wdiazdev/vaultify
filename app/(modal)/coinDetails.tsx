@@ -4,7 +4,8 @@ import {
   StyleSheet,
   TouchableOpacity,
   Image,
-  ActivityIndicator
+  ActivityIndicator,
+  ScrollView
 } from 'react-native'
 import React, { useLayoutEffect, useState } from 'react'
 import { useLocalSearchParams, useNavigation } from 'expo-router'
@@ -12,14 +13,14 @@ import Colors from '@/constants/Colors'
 import { Feather, Ionicons } from '@expo/vector-icons'
 import { useQuery } from '@tanstack/react-query'
 import { fetchCoinData } from '@/query'
-import { formatCurrency } from '@/Utilities'
-import PercentageChange from '@/Components/coinDetails/PercentageChange'
 import CoinDetailsHeader from '@/Components/coinDetails/CoinDetailsHeader'
 import Chart from '@/Components/coinDetails/Chart'
 import Tabs from '@/Components/Tabs'
+import News from '@/Components/coinDetails/News'
+import Overview from '@/Components/coinDetails/Overview'
 
 const coinDetails = () => {
-  const [activeTab, setActiveTab] = useState<string>('Coins')
+  const [activeTab, setActiveTab] = useState<string>('Overview')
 
   const { id } = useLocalSearchParams()
 
@@ -108,6 +109,7 @@ const coinDetails = () => {
       }
     >
       {isLoading && <ActivityIndicator size={'large'} color={Colors.primary} />}
+
       {!isLoading && isSuccess && (
         <View style={coinDetailsContainer}>
           <Tabs
@@ -115,10 +117,23 @@ const coinDetails = () => {
             activeTab={activeTab}
             tabItems={tabItems}
           />
-          <CoinDetailsHeader data={data} />
-          <Chart />
+          <View style={{ marginTop: 10 }}>
+            {activeTab === 'Overview' && (
+              <ScrollView>
+                <CoinDetailsHeader data={data} />
+                <Chart />
+                <Overview data={data} />
+              </ScrollView>
+            )}
+            {activeTab === 'News' && (
+              <>
+                <News />
+              </>
+            )}
+          </View>
         </View>
       )}
+
       {!isLoading && !isSuccess && (
         <View style={errorContainer}>
           <Feather
@@ -160,7 +175,7 @@ const styles = StyleSheet.create({
     height: 30
   },
   coinDetailsContainer: {
-    marginTop: 90
+    marginTop: 70
   },
   errorContainer: {
     flexDirection: 'row',

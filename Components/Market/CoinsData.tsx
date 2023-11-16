@@ -37,10 +37,7 @@ const CoinsData = () => {
   })
 
   const renderItem = ({ item }: Props) => (
-    <Link
-      href={{ pathname: '/(modal)/coinDetails', params: { id: item.id } }}
-      asChild
-    >
+    <Link href={{ pathname: '/coinDetails', params: { id: item.id } }} asChild>
       <TouchableOpacity>
         <View style={rowContainer}>
           <Text style={rowText}>{item.market_cap_rank}</Text>
