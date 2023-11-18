@@ -39,8 +39,7 @@ const coinDetails = () => {
     refetchOnWindowFocus: false,
     retry: 2
   })
-
-  console.log('data:', data)
+  // console.log("data:", data);
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -89,6 +88,9 @@ const coinDetails = () => {
     )
   }
 
+  const percentage: number =
+    data?.market_data?.price_change_percentage_24h.toFixed(2)
+
   const {
     container,
     topHeaderContainer,
@@ -121,7 +123,7 @@ const coinDetails = () => {
             {activeTab === 'Overview' && (
               <>
                 <CoinDetailsHeader data={data} />
-                <Chart />
+                <Chart percentage={percentage} />
                 <Overview data={data} />
               </>
             )}

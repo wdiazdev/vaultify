@@ -7,7 +7,7 @@ import {
   ActivityIndicator,
   TouchableOpacity
 } from 'react-native'
-import React from 'react'
+import React, { useMemo, useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { coinsData } from '@/query'
 import { formatCurrency } from '@/Utilities'
@@ -28,6 +28,8 @@ type Props = {
 }
 
 const CoinsData = () => {
+  const [isAscending, setIsAscending] = useState<boolean>(false)
+
   const { data, isLoading, isSuccess } = useQuery({
     queryKey: ['Coins Data'],
     queryFn: () => coinsData(),
@@ -35,6 +37,22 @@ const CoinsData = () => {
     refetchOnWindowFocus: false,
     retry: 2
   })
+  // console.log('data:', data)
+
+  const handleSortToggle = () => {
+    setIsAscending((prev) => !prev)
+  }
+
+  const sortedData = useMemo(() => {
+    const sortedArray = data
+      ? [...data].sort((a, b) => {
+          const order = isAscending ? 1 : -1
+          return order * (a.market_cap_rank - b.market_cap_rank)
+        })
+      : []
+
+    return sortedArray
+  }, [data, isAscending])
 
   const renderItem = ({ item }: Props) => (
     <Link href={{ pathname: '/coinDetails', params: { id: item.id } }} asChild>
@@ -100,7 +118,7 @@ const CoinsData = () => {
     <View style={container}>
       <View style={headerContainer}>
         <TouchableOpacity
-          // onPress={}
+          onPress={handleSortToggle}
           style={{
             flexDirection: 'row',
             alignItems: 'center'
@@ -108,7 +126,7 @@ const CoinsData = () => {
         >
           <Text style={headerText}>#</Text>
           <Feather
-            name={'chevron-down'}
+            name={isAscending ? 'chevron-down' : 'chevron-up'}
             size={12}
             color={Colors.primary}
             style={{ marginBottom: 2 }}
@@ -127,7 +145,7 @@ const CoinsData = () => {
       )}
       {isSuccess && !isLoading && (
         <FlatList
-          data={data}
+          data={sortedData}
           keyExtractor={(item) => item.id}
           renderItem={renderItem}
           ItemSeparatorComponent={() => <View style={itemSeparator} />}

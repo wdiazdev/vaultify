@@ -1,9 +1,17 @@
-import { View, Text, StyleSheet, Image, ActivityIndicator } from 'react-native'
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  ActivityIndicator,
+  TouchableOpacity
+} from 'react-native'
 import React from 'react'
 import Colors from '@/constants/Colors'
 import { formatCurrency } from '@/Utilities'
 import { useQuery } from '@tanstack/react-query'
 import { singleCoin } from '@/query'
+import { Link } from 'expo-router'
 
 const MainCard = () => {
   const { data, isLoading, isSuccess } = useQuery({
@@ -32,28 +40,35 @@ const MainCard = () => {
       {isLoading && <ActivityIndicator size={'large'} color={Colors.primary} />}
 
       {isSuccess && !isLoading && (
-        <View style={{ alignItems: 'center', justifyContent: 'center' }}>
-          <Image source={{ uri: data?.image }} style={wrapperImg} />
-          <View style={coinInfoHeader}>
-            <Text style={[headerText, { flex: 1, fontFamily: 'm-bold' }]}>
-              {data?.symbol.toUpperCase()}
-            </Text>
-            <Text
-              style={[
-                headerText,
-                { color: Colors.primary, fontFamily: 'm-bold' }
-              ]}
-            >
-              #{data?.market_cap_rank}
-            </Text>
-          </View>
-          <View style={priceContainer}>
-            <Text style={[headerText, { fontSize: 18 }]}>{data?.name}</Text>
-            <Text style={[headerText, { fontSize: 18 }]}>
-              {formatCurrency(data?.current_price)}
-            </Text>
-          </View>
-        </View>
+        <Link
+          href={{ pathname: '/coinDetails', params: { id: data?.id } }}
+          asChild
+        >
+          <TouchableOpacity>
+            <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+              <Image source={{ uri: data?.image }} style={wrapperImg} />
+              <View style={coinInfoHeader}>
+                <Text style={[headerText, { flex: 1, fontFamily: 'm-bold' }]}>
+                  {data?.symbol.toUpperCase()}
+                </Text>
+                <Text
+                  style={[
+                    headerText,
+                    { color: Colors.primary, fontFamily: 'm-bold' }
+                  ]}
+                >
+                  #{data?.market_cap_rank}
+                </Text>
+              </View>
+              <View style={priceContainer}>
+                <Text style={[headerText, { fontSize: 18 }]}>{data?.name}</Text>
+                <Text style={[headerText, { fontSize: 18 }]}>
+                  {formatCurrency(data?.current_price)}
+                </Text>
+              </View>
+            </View>
+          </TouchableOpacity>
+        </Link>
       )}
       {!isLoading && !isSuccess && (
         <View style={{ alignItems: 'center' }}>

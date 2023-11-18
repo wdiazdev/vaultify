@@ -3,8 +3,12 @@ import React from 'react'
 import { CurveType, LineChart } from 'react-native-gifted-charts'
 import Colors from '@/constants/Colors'
 
-const Chart = () => {
-  const data = [
+type Props = {
+  percentage: number
+}
+
+const Chart = ({ percentage }: Props) => {
+  const data1 = [
     { value: 0 },
     { value: 10 },
     { value: 80 },
@@ -24,7 +28,7 @@ const Chart = () => {
   return (
     <View style={container}>
       <LineChart
-        data={data}
+        data={data1}
         rotateLabel
         hideDataPoints
         height={200}
@@ -33,15 +37,15 @@ const Chart = () => {
         overflowTop={0}
         overflowBottom={0}
         // dataPointsColor={'red'}
-        color={'#177AD5'}
-        thickness={3}
-        startFillColor={Colors.secondary}
+        color={Colors.silver}
+        thickness={2}
+        startFillColor={percentage > 0 ? 'green' : 'red'}
         endFillColor1={Colors.primary}
         startOpacity={1}
         endOpacity={0.6}
         initialSpacing={5}
         // yAxisColor={Colors.primary}
-        xAxisColor={Colors.primary}
+        xAxisColor={Colors.silver}
         yAxisThickness={1}
         xAxisThickness={1}
         hideRules
