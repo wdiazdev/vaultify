@@ -10,19 +10,22 @@ type Props = { id: string }
 const LineChart = ({ id }: Props) => {
   const { data, isLoading, isSuccess } = useQuery({
     queryKey: ['Coins Chart', id],
-    queryFn: () => historicalChartData(id, '7'),
+    queryFn: () => historicalChartData(id, '1'),
     staleTime: 60 * 60 * 1000,
     refetchOnWindowFocus: false,
     retry: 2
   })
 
-  const [pricesData, setPricesData] = useState([])
+  const [pricesData, setPricesData] = useState<number[]>([])
   console.log('pricesData:', pricesData)
-  console.log('type:', typeof pricesData)
 
   useEffect(() => {
-    if (isSuccess && data && data.prices.length > 0) {
-      setPricesData(data.prices)
+    if (isSuccess && data) {
+      const filteredData = data.prices?.map((crypto: number[]) => crypto[1])
+
+      if (filteredData && filteredData.length > 0) {
+        setPricesData(filteredData)
+      }
     }
   }, [isSuccess, data])
 
@@ -33,7 +36,7 @@ const LineChart = ({ id }: Props) => {
           labels: [],
           datasets: [
             {
-              data: pricesData.flat()
+              data: pricesData
             }
           ]
         }}
