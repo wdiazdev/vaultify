@@ -28,7 +28,7 @@ type Props = {
 }
 
 const CoinsData = () => {
-  const [isAscending, setIsAscending] = useState<boolean>(false)
+  const [isAscending, setIsAscending] = useState<boolean>(true)
 
   const { data, isLoading, isSuccess } = useQuery({
     queryKey: ['Coins Data'],

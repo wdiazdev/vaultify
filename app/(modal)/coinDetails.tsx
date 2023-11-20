@@ -14,15 +14,19 @@ import { Feather, Ionicons } from '@expo/vector-icons'
 import { useQuery } from '@tanstack/react-query'
 import { fetchCoinData } from '@/query'
 import CoinDetailsHeader from '@/Components/coinDetails/CoinDetailsHeader'
-import Chart from '@/Components/coinDetails/Chart'
 import Tabs from '@/Components/Tabs'
 import News from '@/Components/coinDetails/News'
 import Overview from '@/Components/coinDetails/Overview'
+import LineChart from '@/Components/coinDetails/LineChart'
+
+type Props = {
+  id: string
+}
 
 const coinDetails = () => {
   const [activeTab, setActiveTab] = useState<string>('Overview')
 
-  const { id } = useLocalSearchParams()
+  const { id }: Props = useLocalSearchParams()
 
   const handleActiveTab = (tab: string) => {
     setActiveTab(tab)
@@ -88,9 +92,6 @@ const coinDetails = () => {
     )
   }
 
-  const percentage: number =
-    data?.market_data?.price_change_percentage_24h.toFixed(2)
-
   const {
     container,
     topHeaderContainer,
@@ -123,7 +124,7 @@ const coinDetails = () => {
             {activeTab === 'Overview' && (
               <>
                 <CoinDetailsHeader data={data} />
-                <Chart percentage={percentage} />
+                <LineChart id={id} />
                 <Overview data={data} />
               </>
             )}

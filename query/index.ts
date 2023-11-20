@@ -28,8 +28,16 @@ export const trendingCoins = async () => {
   return result
 }
 
-export const fetchCoinData = async (id: string | string[]) => {
+export const fetchCoinData = async (id: string) => {
   const response = await fetch(`${baseURL}/coins/${id}`)
+  const result = await response.json()
+  return result
+}
+
+export const historicalChartData = async (id: string, days: string) => {
+  const response = await fetch(
+    `${baseURL}/coins/${id}/market_chart?vs_currency=usd&days=${days}`
+  )
   const result = await response.json()
   return result
 }
